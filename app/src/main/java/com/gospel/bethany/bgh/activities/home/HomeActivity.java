@@ -10,9 +10,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.google.firebase.database.FirebaseDatabase;
 import com.gospel.bethany.bgh.R;
-import com.gospel.bethany.bgh.activities.MainActivity;
 import com.gospel.bethany.bgh.activities.auth.AuthActivity;
 import com.gospel.bethany.bgh.fragments.tap.TapFragment;
 
@@ -23,7 +21,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        setCustomActionBar();
+//        setCustomActionBar();
         setHomeFragement();
     }
 

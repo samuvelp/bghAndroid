@@ -2,8 +2,6 @@ package com.gospel.bethany.bgh.fragments.profile;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -16,7 +14,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
 import com.gospel.bethany.bgh.R;
-import com.gospel.bethany.bgh.activities.MainActivity;
 import com.gospel.bethany.bgh.activities.auth.AuthActivity;
 
 import de.hdodenhof.circleimageview.CircleImageView;

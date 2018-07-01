@@ -10,6 +10,6 @@ public class BGHApplication extends Application {
     public void onCreate() {
         super.onCreate();
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-        FirebaseMessaging.getInstance().subscribeToTopic("pushNotifications");
+        FirebaseMessaging.getInstance().subscribeToTopic("pushNotification");
     }
 }

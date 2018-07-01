@@ -21,5 +21,5 @@ exports.pushNotification = functions.database.ref('/taps/{pushId}').onWrite((cha
         priority : "high",
         timeToLive: 60 * 60 * 24
     };
-    return admin.messaging().sendToTopic("pushNotifications",payload,option);
+    return admin.messaging().sendToTopic("pushNotification",payload,option);
 });
