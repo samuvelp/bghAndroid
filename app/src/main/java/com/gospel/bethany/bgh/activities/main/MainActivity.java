@@ -18,6 +18,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.activities.eventcalendar.EventCalendarActivity;
 import com.gospel.bethany.bgh.activities.home.HomeActivity;
 import com.gospel.bethany.bgh.model.MainMenu;
 
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements MainMenuAdapter.O
     private void initObj() {
         mMenuRecyclerView = findViewById(R.id.menuRecyclerView);
         mMainMenuList = new ArrayList<>();
-        mMainMenuAdapter = new MainMenuAdapter(mMainMenuList,this);
+        mMainMenuAdapter = new MainMenuAdapter(mMainMenuList, this);
     }
 
     private void prepareList() {
@@ -99,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements MainMenuAdapter.O
     public void onItemClick(String menuName) {
         if (menuName.toLowerCase().equals("tap")) {
             startActivity(new Intent(this, HomeActivity.class));
+        } else if (menuName.toLowerCase().equals("events")) {
+            startActivity(new Intent(this, EventCalendarActivity.class));
         }
     }
 

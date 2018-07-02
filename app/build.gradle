@@ -56,7 +56,8 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.2'
     //eventbus
     implementation 'org.greenrobot:eventbus:3.1.1'
-
+    //caledar
+    implementation 'com.github.tibolte:agendacalendarview:1.0.4'
 
 
 

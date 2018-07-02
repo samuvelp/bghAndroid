@@ -28,7 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activities.auth.AuthActivity"
             android:screenOrientation="portrait" />
@@ -42,6 +41,10 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
+        <activity
+            android:name=".activities.eventcalendar.EventCalendarActivity"
+            android:theme="@style/NoActionBarCustom" />
     </application>
 
 </manifest>
