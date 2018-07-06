@@ -2,9 +2,14 @@ package com.gospel.bethany.bgh.activities.eventcalendar;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.github.tibolte.agendacalendarview.AgendaCalendarView;
@@ -12,51 +17,92 @@ import com.github.tibolte.agendacalendarview.CalendarPickerController;
 import com.github.tibolte.agendacalendarview.models.BaseCalendarEvent;
 import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.github.tibolte.agendacalendarview.models.DayItem;
+import com.gospel.bethany.bgh.Helper;
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.activities.auth.AuthActivity;
+import com.gospel.bethany.bgh.model.CalendarEvents;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class EventCalendarActivity extends AppCompatActivity implements CalendarPickerController {
+import bolts.Continuation;
+import bolts.Task;
+
+public class EventCalendarActivity extends AppCompatActivity {
     AgendaCalendarView mAgendaCalendarView;
+    ProgressBar mProgressBar;
+    ArrayList<CalendarEvents> mCalendarEventList = new ArrayList<>();
+    List<CalendarEvent> eventList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_calendar);
         initObj();
+        mProgressBar.setVisibility(View.VISIBLE);
         initEventCalendar();
     }
 
     private void initObj() {
         mAgendaCalendarView = findViewById(R.id.agenda_calendar_view);
+        mProgressBar = findViewById(R.id.calendarProgress);
     }
 
     public void initEventCalendar() {
-        Calendar minDate = Calendar.getInstance();
-        Calendar maxDate = Calendar.getInstance();
+        final Calendar minDate = Calendar.getInstance();
+        final Calendar maxDate = Calendar.getInstance();
 
-        minDate.add(Calendar.MONTH, -2);
+        minDate.add(Calendar.MONTH, 0);
         minDate.set(Calendar.DAY_OF_MONTH, 1);
-        maxDate.add(Calendar.YEAR, 1);
+        maxDate.add(Calendar.DAY_OF_MONTH, 30);
 
-        List<CalendarEvent> eventList = new ArrayList<>();
-        mockList(eventList);
 
-        mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), this);
+//        mockList(eventList);
+        Helper.getCaledarEvents().continueWith(new Continuation<ArrayList<CalendarEvents>, Object>() {
+            @Override
+            public Object then(Task<ArrayList<CalendarEvents>> task) throws Exception {
+                if (task.isCompleted()) {
+                    mCalendarEventList.addAll(task.getResult());
+                    populateData(mCalendarEventList);
+                    mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPickerController() {
+                        @Override
+                        public void onDaySelected(DayItem dayItem) {
+
+                        }
+
+                        @Override
+                        public void onEventSelected(CalendarEvent event) {
+                            showDescription(event);
+                        }
+
+                        @Override
+                        public void onScrollToDate(Calendar calendar) {
+
+                        }
+                    });
+                    mProgressBar.setVisibility(View.GONE);
+                }
+                return null;
+            }
+        });
+
     }
 
-    private void mockList(List<CalendarEvent> eventList) {
-        Calendar startTime1 = Calendar.getInstance();
-        Calendar endTime1 = Calendar.getInstance();
-        startTime1.add(Calendar.DATE, 3);
-        endTime1.add(Calendar.DATE, 3);
-        BaseCalendarEvent event1 = new BaseCalendarEvent("Thibault travels in Iceland", "A wonderful journey!", "Iceland",
-                ContextCompat.getColor(this, R.color.colorPrimary), startTime1, endTime1, true);
-        eventList.add(event1);
+    private void populateData(ArrayList<CalendarEvents> calendarEvents) {
+        for (int i = 0; i < calendarEvents.size(); i++) {
+            BaseCalendarEvent event = getEvent(calendarEvents.get(i).getTitle(),
+                    calendarEvents.get(i).getDescription(),
+                    calendarEvents.get(i).getLocation(),
+                    timeStampDifference(calendarEvents.get(i).getTimestamp()));
+            eventList.add(event);
+        }
+    }
 
+    private int timeStampDifference(long eventTimestamp) {
+        return (int) ((eventTimestamp - new Date().getTime()) / (1000 * 60 * 60 * 24));
     }
 
     public BaseCalendarEvent getEvent(String title, String description, String locaiton, int diffDate) {
@@ -69,12 +115,7 @@ public class EventCalendarActivity extends AppCompatActivity implements Calendar
         return event;
     }
 
-    @Override
-    public void onDaySelected(DayItem dayItem) {
-    }
-
-    @Override
-    public void onEventSelected(CalendarEvent event) {
+    private void showDescription(CalendarEvent event) {
         new AlertDialog.Builder(this)
                 .setTitle(((BaseCalendarEvent) event).getTitle())
                 .setMessage(((BaseCalendarEvent) event).getDescription())
@@ -88,6 +129,22 @@ public class EventCalendarActivity extends AppCompatActivity implements Calendar
     }
 
     @Override
-    public void onScrollToDate(Calendar calendar) {
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.add_event_menu, menu);
+        return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_event_menu: {
+                Intent intent = new Intent(this, AuthActivity.class);
+                intent.putExtra("type", "event");
+                startActivity(intent);
+            }
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

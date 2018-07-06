@@ -15,6 +15,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.gospel.bethany.bgh.model.AssemblyTaps;
+import com.gospel.bethany.bgh.model.CalendarEvents;
 import com.gospel.bethany.bgh.model.Tap;
 import com.gospel.bethany.bgh.model.User;
 import com.gospel.bethany.bgh.model.UserTaps;
@@ -22,6 +23,7 @@ import com.gospel.bethany.bgh.model.UserTaps;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -137,15 +139,16 @@ public class Helper {
                 });
         return tcs.getTask();
     }
-    public static Task<ArrayList<Tap>> getTaps(){
+
+    public static Task<ArrayList<Tap>> getTaps() {
         final TaskCompletionSource<ArrayList<Tap>> tcs = new TaskCompletionSource<>();
         final ArrayList<Tap> tapArrayList = new ArrayList<>();
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference().child("taps");
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                if(dataSnapshot!=null && dataSnapshot.getChildren()!=null){
-                    for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                if (dataSnapshot != null && dataSnapshot.getChildren() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Tap tap = snapshot.getValue(Tap.class);
                         tap.setKey(snapshot.getKey());
                         tapArrayList.add(tap);
@@ -162,6 +165,7 @@ public class Helper {
         });
         return tcs.getTask();
     }
+
     public static Task<List<User>> getUsers(ArrayList<String> usersId) {
         ArrayList<Task<User>> userIdList = new ArrayList<>();
         for (String userId : usersId) {
@@ -220,6 +224,32 @@ public class Helper {
                         });
                     }
                 });
+
+            }
+        });
+        return tcs.getTask();
+    }
+
+    public static Task<ArrayList<CalendarEvents>> getCaledarEvents() {
+        final TaskCompletionSource<ArrayList<CalendarEvents>> tcs = new TaskCompletionSource<>();
+        final ArrayList<CalendarEvents> calendarEventsArrayList = new ArrayList<>();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("calendarEvents");
+        ref.orderByKey();
+        ref.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null && dataSnapshot.getValue() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        CalendarEvents calendarEvents = snapshot.getValue(CalendarEvents.class);
+                        calendarEvents.setKey(snapshot.getKey());
+                        calendarEventsArrayList.add(calendarEvents);
+                    }
+                    tcs.setResult(calendarEventsArrayList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });

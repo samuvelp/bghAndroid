@@ -1,4 +1,4 @@
-package com.gospel.bethany.bgh.activities.home;
+package com.gospel.bethany.bgh.activities.tap;
 
 
 import android.app.FragmentManager;
@@ -14,12 +14,12 @@ import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.activities.auth.AuthActivity;
 import com.gospel.bethany.bgh.fragments.tap.TapFragment;
 
-public class HomeActivity extends AppCompatActivity {
+public class TapActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_tap);
 //        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
 //        setCustomActionBar();
         setHomeFragement();
@@ -48,7 +48,9 @@ public class HomeActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.add_tap:
-                startActivity(new Intent(HomeActivity.this, AuthActivity.class));
+                Intent intent = new Intent(TapActivity.this, AuthActivity.class);
+                intent.putExtra("type", "tap");
+                startActivity(intent);
             default:
                 return super.onOptionsItemSelected(item);
         }

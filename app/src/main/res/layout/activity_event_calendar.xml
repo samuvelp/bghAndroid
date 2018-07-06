@@ -7,15 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".activities.eventcalendar.EventCalendarActivity">
 
-    <com.github.tibolte.agendacalendarview.AgendaCalendarView
-        android:id="@+id/agenda_calendar_view"
+    <FrameLayout
+        android:id="@+id/calendarLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        agendaCalendar:agendaCurrentDayTextColor="@color/colorPrimaryDark"
-        agendaCalendar:calendarColor="@color/colorPrimary"
-        agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
-        agendaCalendar:calendarDayTextColor="@color/theme_text_icons"
-        agendaCalendar:calendarHeaderColor="@color/colorPrimaryDark"
-        agendaCalendar:calendarPastDayTextColor="@color/theme_light_primary"
-        agendaCalendar:fabColor="@color/colorPrimary" />
+        android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/calendarProgress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+
+        <com.github.tibolte.agendacalendarview.AgendaCalendarView
+            android:id="@+id/agenda_calendar_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            agendaCalendar:agendaCurrentDayTextColor="@color/colorPrimaryDark"
+            agendaCalendar:calendarColor="@color/colorPrimary"
+            agendaCalendar:calendarCurrentDayTextColor="@color/calendar_text_current_day"
+            agendaCalendar:calendarDayTextColor="@color/theme_text_icons"
+            agendaCalendar:calendarHeaderColor="@color/colorPrimaryDark"
+            agendaCalendar:calendarPastDayTextColor="@color/theme_light_primary"
+            agendaCalendar:fabColor="@color/colorPrimary" />
+    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

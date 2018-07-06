@@ -16,6 +16,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.activities.createTap.CreateTapActivity;
+import com.gospel.bethany.bgh.activities.main.MainActivity;
 
 public class AuthActivity extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
@@ -35,7 +36,7 @@ public class AuthActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = mEmailEt.getText().toString().trim();
                 String password = mPasswordEt.getText().toString().trim();
-                loginWithEmailandPassword(email,password);
+                loginWithEmailandPassword(email, password);
                 mProgressAuth.setVisibility(View.VISIBLE);
             }
         });
@@ -50,7 +51,6 @@ public class AuthActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -61,7 +61,7 @@ public class AuthActivity extends AppCompatActivity {
 
     private void loginWithEmailandPassword(String email, String password) {
         //Now using firebase we are signing in the user here
-        mFirebaseAuth.signInWithEmailAndPassword(email,password)
+        mFirebaseAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -75,7 +75,9 @@ public class AuthActivity extends AppCompatActivity {
     }
 
     private void launchMainActivity() {
-        startActivity(new Intent(AuthActivity.this, CreateTapActivity.class));
+        if (getIntent().getStringExtra("type").equals("tap")) {
+            startActivity(new Intent(AuthActivity.this, CreateTapActivity.class));
+        }
         finish();
     }
 }

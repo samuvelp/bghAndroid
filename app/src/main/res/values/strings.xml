@@ -233,4 +233,5 @@
     <string name="post_type">Post type</string>
     <string name="add_tap">Add tap</string>
     <string name="sign_in">sign in</string>
+    <string name="add_event">Add event</string>
 </resources>

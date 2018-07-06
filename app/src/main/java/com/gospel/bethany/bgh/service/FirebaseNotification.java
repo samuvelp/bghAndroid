@@ -12,7 +12,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.gospel.bethany.bgh.R;
-import com.gospel.bethany.bgh.activities.home.HomeActivity;
+import com.gospel.bethany.bgh.activities.tap.TapActivity;
 
 public class FirebaseNotification extends FirebaseMessagingService {
     private static String TAG = "FirebaseMessageSerive";
@@ -35,7 +35,7 @@ public class FirebaseNotification extends FirebaseMessagingService {
 
 
     private void sendNotification(String notificationTitle, String notificationBody) {
-        Intent intent = new Intent(this, HomeActivity.class);
+        Intent intent = new Intent(this, TapActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

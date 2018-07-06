@@ -10,16 +10,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
-import android.view.MotionEvent;
 import android.view.View;
 
 import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.activities.eventcalendar.EventCalendarActivity;
-import com.gospel.bethany.bgh.activities.home.HomeActivity;
+import com.gospel.bethany.bgh.activities.tap.TapActivity;
 import com.gospel.bethany.bgh.model.MainMenu;
 
 import java.util.ArrayList;
@@ -99,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MainMenuAdapter.O
     @Override
     public void onItemClick(String menuName) {
         if (menuName.toLowerCase().equals("tap")) {
-            startActivity(new Intent(this, HomeActivity.class));
+            startActivity(new Intent(this, TapActivity.class));
         } else if (menuName.toLowerCase().equals("events")) {
             startActivity(new Intent(this, EventCalendarActivity.class));
         }

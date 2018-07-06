@@ -32,7 +32,7 @@
             android:name=".activities.auth.AuthActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activities.home.HomeActivity"
+            android:name=".activities.tap.TapActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activities.createTap.CreateTapActivity" />
 
@@ -42,9 +42,7 @@
             </intent-filter>
         </service>
 
-        <activity
-            android:name=".activities.eventcalendar.EventCalendarActivity"
-            android:theme="@style/NoActionBarCustom" />
+        <activity android:name=".activities.eventcalendar.EventCalendarActivity" />
     </application>
 
 </manifest>
