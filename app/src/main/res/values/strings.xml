@@ -234,4 +234,9 @@
     <string name="add_tap">Add tap</string>
     <string name="sign_in">sign in</string>
     <string name="add_event">Add event</string>
+    <string name="event_title">Event title</string>
+    <string name="title_activity_create_event">CreateEventActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="event_location">Where is the event?</string>
+    <string name="note">Note:</string>
 </resources>

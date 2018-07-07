@@ -3,8 +3,10 @@
     <!--<color name="colorPrimary">#4A148C</color>-->
     <color name="colorPrimary">#F44336</color>
     <color name="colorPrimaryDark">#D32F2F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#ffffff</color>
     <color name="color_white">#ffffff</color>
     <color name="color_black">#000000</color>
     <color name="colorTabBackGround">#9C27B0</color>
+    <color name="transparent">#00FFFFFF</color>
+    <color name="lightRed">#EF9A9A</color>
 </resources>
