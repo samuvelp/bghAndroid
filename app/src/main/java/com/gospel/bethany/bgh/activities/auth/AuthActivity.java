@@ -9,14 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.activities.createEvent.CreateEventActivity;
 import com.gospel.bethany.bgh.activities.createTap.CreateTapActivity;
-import com.gospel.bethany.bgh.activities.main.MainActivity;
 
 public class AuthActivity extends AppCompatActivity {
     FirebaseAuth mFirebaseAuth;
@@ -55,7 +57,7 @@ public class AuthActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         if (mFirebaseAuth.getCurrentUser() != null) {
-            launchMainActivity();
+            launchActivity();
         }
     }
 
@@ -66,17 +68,26 @@ public class AuthActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            launchMainActivity();
+                            launchActivity();
                         } else {
                             Log.w(TAG, "signInWithCredential:failure", task.getException());
                         }
                     }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(), "Please check the email address and password", Toast.LENGTH_SHORT).show();
+                        mProgressAuth.setVisibility(View.GONE);
+                    }
                 });
     }
 
-    private void launchMainActivity() {
+    private void launchActivity() {
         if (getIntent().getStringExtra("type").equals("tap")) {
             startActivity(new Intent(AuthActivity.this, CreateTapActivity.class));
+        } else if (getIntent().getStringExtra("type").equals("event")) {
+            startActivity(new Intent(AuthActivity.this, CreateEventActivity.class));
         }
         finish();
     }
