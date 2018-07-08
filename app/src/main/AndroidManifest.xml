@@ -43,6 +43,11 @@
         </service>
 
         <activity android:name=".activities.eventcalendar.EventCalendarActivity" />
+        <activity
+            android:name=".activities.createEvent.CreateEventActivity"
+            android:label="@string/title_activity_create_event"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
     </application>
 
 </manifest>

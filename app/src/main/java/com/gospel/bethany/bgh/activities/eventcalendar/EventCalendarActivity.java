@@ -67,6 +67,7 @@ public class EventCalendarActivity extends AppCompatActivity {
                 if (task.isCompleted()) {
                     mCalendarEventList.addAll(task.getResult());
                     populateData(mCalendarEventList);
+                    Helper.removeGetCalendarEventListener();
                     mAgendaCalendarView.init(eventList, minDate, maxDate, Locale.getDefault(), new CalendarPickerController() {
                         @Override
                         public void onDaySelected(DayItem dayItem) {
@@ -102,7 +103,11 @@ public class EventCalendarActivity extends AppCompatActivity {
     }
 
     private int timeStampDifference(long eventTimestamp) {
-        return (int) ((eventTimestamp - new Date().getTime()) / (1000 * 60 * 60 * 24));
+        int diffInHour = (int) (Math.abs(eventTimestamp - new Date().getTime()) / (1000 * 60 * 60));
+        if (diffInHour >= 1 && diffInHour < 24) {
+            return 1;
+        }
+        return (diffInHour / 24);
     }
 
     public BaseCalendarEvent getEvent(String title, String description, String locaiton, int diffDate) {
@@ -116,16 +121,18 @@ public class EventCalendarActivity extends AppCompatActivity {
     }
 
     private void showDescription(CalendarEvent event) {
-        new AlertDialog.Builder(this)
-                .setTitle(((BaseCalendarEvent) event).getTitle())
-                .setMessage(((BaseCalendarEvent) event).getDescription())
-                .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
+        if (((BaseCalendarEvent) event).getDescription() != null && !((BaseCalendarEvent) event).getDescription().equals("")) {
+            new AlertDialog.Builder(this)
+                    .setTitle(((BaseCalendarEvent) event).getTitle())
+                    .setMessage(((BaseCalendarEvent) event).getDescription())
+                    .setNeutralButton("Ok", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
 
-                    }
-                })
-                .show();
+                        }
+                    })
+                    .show();
+        }
     }
 
     @Override

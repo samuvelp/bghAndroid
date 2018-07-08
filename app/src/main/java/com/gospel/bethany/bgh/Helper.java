@@ -4,7 +4,9 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
+import com.github.tibolte.agendacalendarview.models.CalendarEvent;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +40,8 @@ import bolts.TaskCompletionSource;
 public class Helper {
 
     private static User user;
+    private static Query calendarEventReference;
+    static ValueEventListener calendarEventListener;
 
     public static void getUserandSave(final Context context) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users")
@@ -233,9 +237,9 @@ public class Helper {
     public static Task<ArrayList<CalendarEvents>> getCaledarEvents() {
         final TaskCompletionSource<ArrayList<CalendarEvents>> tcs = new TaskCompletionSource<>();
         final ArrayList<CalendarEvents> calendarEventsArrayList = new ArrayList<>();
-        DatabaseReference ref = FirebaseDatabase.getInstance().getReference().child("calendarEvents");
-        ref.orderByKey();
-        ref.addValueEventListener(new ValueEventListener() {
+        calendarEventReference = FirebaseDatabase.getInstance().getReference().child("calendarEvents").orderByChild("timestamp").limitToLast(3);
+        calendarEventReference.keepSynced(true);
+        calendarEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null && dataSnapshot.getValue() != null) {
@@ -251,6 +255,27 @@ public class Helper {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        };
+        calendarEventReference.addValueEventListener(calendarEventListener);
+        return tcs.getTask();
+    }
+
+    public static void removeGetCalendarEventListener() {
+        calendarEventReference.removeEventListener(calendarEventListener);
+    }
+
+    public static Task<Void> postCalenderEvent(CalendarEvents calendarEvent) {
+        final TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
+        FirebaseDatabase.getInstance().getReference().child("calendarEvents").push().setValue(calendarEvent).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                tcs.setResult(aVoid);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                tcs.setError(e);
             }
         });
         return tcs.getTask();

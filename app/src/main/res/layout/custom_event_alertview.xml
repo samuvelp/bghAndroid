@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -8,5 +8,8 @@
         android:id="@+id/locationAlertEt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/transparent" />
-</LinearLayout>
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:textSize="12sp"
+        android:layout_centerInParent="true"/>
+</RelativeLayout>

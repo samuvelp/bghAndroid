@@ -1,9 +1,9 @@
 package com.gospel.bethany.bgh.model;
 
 public class CalendarEvents {
-    String key = "";
+    String key ;
     String title = "";
-    String description = "";
+    String description ;
     String location = "";
     long timestamp = 0;
 
