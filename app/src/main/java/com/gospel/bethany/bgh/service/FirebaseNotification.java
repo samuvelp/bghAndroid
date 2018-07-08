@@ -12,6 +12,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.activities.eventcalendar.EventCalendarActivity;
+import com.gospel.bethany.bgh.activities.main.MainActivity;
 import com.gospel.bethany.bgh.activities.tap.TapActivity;
 
 public class FirebaseNotification extends FirebaseMessagingService {
@@ -19,23 +21,31 @@ public class FirebaseNotification extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-        String notificationTitle = null, notificationBody = null;
+        String notificationTitle = null, notificationBody = null, notificationType = null;
 
         // Check if message contains a notification payload.
         if (remoteMessage.getData() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getData().get("body"));
             notificationTitle = remoteMessage.getData().get("title");
             notificationBody = remoteMessage.getData().get("body");
+            notificationType = remoteMessage.getData().get("type");
         }
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        sendNotification(notificationTitle, notificationBody);
+        sendNotification(notificationTitle, notificationBody, notificationType);
     }
 
 
-    private void sendNotification(String notificationTitle, String notificationBody) {
-        Intent intent = new Intent(this, TapActivity.class);
+    private void sendNotification(String notificationTitle, String notificationBody, String notificationType) {
+        Intent intent = null;
+        if (notificationType.equals("tap")) {
+            intent = new Intent(this, TapActivity.class);
+        } else if (notificationType.equals("calendar")) {
+            intent = new Intent(this, EventCalendarActivity.class);
+        } else{
+            intent = new Intent(this, MainActivity.class);
+        }
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent,
                 PendingIntent.FLAG_ONE_SHOT);

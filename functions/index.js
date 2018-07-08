@@ -8,7 +8,7 @@ admin.initializeApp(functions.config().firebase)
 // exports.helloWorld = functions.https.onRequest((request, response) => {
 //  response.send("Hello from Firebase!");
 // });
-exports.pushNotification = functions.database.ref('/taps/{pushId}').onWrite((change,context)=>{
+exports.tapFunction = functions.database.ref('/taps/{pushId}').onWrite((change,context)=>{
     console.log("Push notification triggered")
     const snapshot = change.after.val();
     const payload = {
@@ -23,3 +23,18 @@ exports.pushNotification = functions.database.ref('/taps/{pushId}').onWrite((cha
     };
     return admin.messaging().sendToTopic("pushNotification",payload,option);
 });
+exports.calendarFunction = functions.database.ref('/calendarEvents/{pushId}').onWrite((change,context)=>{
+    console.log("Push notification triggered")
+    const snapshot = change.after.val();
+    const payload={
+        data :{
+            title : "New event added",
+            body : snapshot.title
+        }
+    };
+    const option ={
+        priority : "high",
+        timeToLive: 60 * 60 * 24
+    };
+    return admin.messaging().sendToTopic("pushNotification",payload,option);
+})
