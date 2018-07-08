@@ -237,7 +237,7 @@ public class Helper {
     public static Task<ArrayList<CalendarEvents>> getCaledarEvents() {
         final TaskCompletionSource<ArrayList<CalendarEvents>> tcs = new TaskCompletionSource<>();
         final ArrayList<CalendarEvents> calendarEventsArrayList = new ArrayList<>();
-        calendarEventReference = FirebaseDatabase.getInstance().getReference().child("calendarEvents").orderByChild("timestamp").limitToLast(3);
+        calendarEventReference = FirebaseDatabase.getInstance().getReference().child("calendarEvents").orderByChild("timestamp").limitToLast(30);
         calendarEventReference.keepSynced(true);
         calendarEventListener = new ValueEventListener() {
             @Override

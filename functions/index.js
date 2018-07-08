@@ -14,7 +14,8 @@ exports.tapFunction = functions.database.ref('/taps/{pushId}').onWrite((change,c
     const payload = {
         data : {
             title : snapshot.type,
-            body : snapshot.message
+            body : snapshot.message,
+            type : "tap"
         }
     };
     const option ={
@@ -28,8 +29,9 @@ exports.calendarFunction = functions.database.ref('/calendarEvents/{pushId}').on
     const snapshot = change.after.val();
     const payload={
         data :{
-            title : "New event added",
-            body : snapshot.title
+            title : "New event added to the calendar",
+            body : snapshot.title,
+            type : "calendar"
         }
     };
     const option ={
