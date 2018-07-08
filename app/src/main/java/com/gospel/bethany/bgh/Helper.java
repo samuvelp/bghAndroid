@@ -249,6 +249,8 @@ public class Helper {
                         calendarEventsArrayList.add(calendarEvents);
                     }
                     tcs.setResult(calendarEventsArrayList);
+                } else {
+                    tcs.setResult(calendarEventsArrayList);
                 }
             }
 

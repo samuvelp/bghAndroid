@@ -55,7 +55,7 @@ public class EventCalendarActivity extends AppCompatActivity {
         final Calendar minDate = Calendar.getInstance();
         final Calendar maxDate = Calendar.getInstance();
 
-        minDate.add(Calendar.MONTH, 0);
+        minDate.add(Calendar.DAY_OF_MONTH, 1);
         minDate.set(Calendar.DAY_OF_MONTH, 1);
         maxDate.add(Calendar.DAY_OF_MONTH, 30);
 
@@ -103,11 +103,20 @@ public class EventCalendarActivity extends AppCompatActivity {
     }
 
     private int timeStampDifference(long eventTimestamp) {
-        int diffInHour = (int) (Math.abs(eventTimestamp - new Date().getTime()) / (1000 * 60 * 60));
-        if (diffInHour >= 1 && diffInHour < 24) {
+        int diffInHour = (int) ((eventTimestamp - new Date().getTime()) / (1000 * 60 * 60));
+        long diffInSec = ((eventTimestamp - new Date().getTime()) / (1000));
+        int diffInDay = (int) Math.ceil(diffInSec / 86400);
+        if (diffInSec > 0 && diffInSec < 86400) {
             return 1;
+        } else if (diffInSec < 0) {
+            return diffInDay;
+        } else {
+            return diffInDay + 1;
         }
-        return (diffInHour / 24);
+//        if (diffInHour >= 1 && diffInHour < 24) {
+//            return 1;
+//        }
+//        return (diffInHour / 24);
     }
 
     public BaseCalendarEvent getEvent(String title, String description, String locaiton, int diffDate) {
