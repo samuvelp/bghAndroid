@@ -13,16 +13,17 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="70dp"
-        android:background="#000">
+        android:layout_marginBottom="70dp">
 
     </android.support.v7.widget.RecyclerView>
+
     <LinearLayout
         android:id="@+id/player_detail_layout"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:layout_marginTop="-70dp"
+        android:layout_alignParentBottom="true"
         android:layout_below="@id/music_list_recycler_view"
+        android:layout_marginTop="-70dp"
         android:background="#fff"
         android:orientation="vertical">
 
@@ -30,26 +31,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="110dp"
-            android:orientation="vertical"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
             <TextView
                 android:id="@+id/sermon_title_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sunday title unday title unday title unday title unday title unday title "
-                android:textSize="18sp"
-                android:lines="1"
                 android:fontFamily="sans-serif"
-                />
+                android:lines="1"
+                android:text="Sunday title unday title unday title unday title unday title unday title "
+                android:textSize="18sp" />
+
             <TextView
                 android:id="@+id/sermon_author_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sunday title unday title unday title unday title unday title unday title "
-                android:textSize="14sp"
-                android:lines="1"
                 android:fontFamily="sans-serif"
-                />
+                android:lines="1"
+                android:text="Sunday title unday title unday title unday title unday title unday title "
+                android:textSize="14sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -64,9 +65,9 @@
         android:layout_marginLeft="5dp"
         android:clickable="true"
         android:foreground="?android:selectableItemBackground"
-        app:fill_color="#e1e1e1"
+        app:fill_color="@color/colorPrimary"
         app:pause_bg="#000000"
-        app:play_bg="#D32F2F" />
+        app:play_bg="#FFFFFf" />
 
 
 </RelativeLayout>
