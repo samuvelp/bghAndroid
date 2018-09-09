@@ -17,6 +17,7 @@ import android.view.View;
 
 import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.activities.eventcalendar.EventCalendarActivity;
+import com.gospel.bethany.bgh.activities.sermon.SermonActivity;
 import com.gospel.bethany.bgh.activities.tap.TapActivity;
 import com.gospel.bethany.bgh.model.MainMenu;
 
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements MainMenuAdapter.O
             startActivity(new Intent(this, TapActivity.class));
         } else if (menuName.toLowerCase().equals("events")) {
             startActivity(new Intent(this, EventCalendarActivity.class));
+        } else if (menuName.toLowerCase().equals("sermons")) {
+            startActivity(new Intent(this, SermonActivity.class));
         }
     }
 
