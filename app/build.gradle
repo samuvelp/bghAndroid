@@ -60,6 +60,10 @@ dependencies {
     implementation 'com.github.tibolte:agendacalendarview:1.0.4'
     //time picker
     implementation 'com.mikhaellopez:lazydatepicker:1.0.0'
+    //play pause library
+    implementation 'com.github.ohoussein.playpauseview:playpauseview:1.0.2'
+    implementation project(':dmaudiostreamer')
+
 
 
     implementation 'com.android.support:support-v4:27.1.1'
