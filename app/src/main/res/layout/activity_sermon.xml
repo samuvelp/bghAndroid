@@ -6,4 +6,67 @@
     android:layout_height="match_parent"
     tools:context=".activities.sermon.SermonActivity">
 
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/music_list_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="70dp"
+        android:background="#000">
+
+    </android.support.v7.widget.RecyclerView>
+    <LinearLayout
+        android:id="@+id/player_detail_layout"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginTop="-70dp"
+        android:layout_below="@id/music_list_recycler_view"
+        android:background="#fff"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="110dp"
+            android:orientation="vertical"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:id="@+id/sermon_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday title unday title unday title unday title unday title unday title "
+                android:textSize="18sp"
+                android:lines="1"
+                android:fontFamily="sans-serif"
+                />
+            <TextView
+                android:id="@+id/sermon_author_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sunday title unday title unday title unday title unday title unday title "
+                android:textSize="14sp"
+                android:lines="1"
+                android:fontFamily="sans-serif"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <com.ohoussein.playpause.PlayPauseView
+        android:id="@+id/play_pause_view"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="5dp"
+        android:clickable="true"
+        android:foreground="?android:selectableItemBackground"
+        app:fill_color="#e1e1e1"
+        app:pause_bg="#000000"
+        app:play_bg="#D32F2F" />
+
+
 </RelativeLayout>
