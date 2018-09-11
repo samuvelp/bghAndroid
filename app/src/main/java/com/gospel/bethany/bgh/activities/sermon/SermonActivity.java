@@ -22,6 +22,9 @@ public class SermonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sermon);
         initObj();
         setClickListeners();
+        //TODO: get sermon data from firebase
+        //TODO: generate list
+        //TODO: onclick list should play the url
     }
 
     private void setClickListeners() {
