@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="10dp">
 
-</RelativeLayout>
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/row_sermon_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Sunday sermon sunday sermon"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/row_sermon_author_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Sunday sermon sunday sermon"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/row_sermon_length"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/title_layout"
+        android:gravity="center"/>
+
+    <com.ohoussein.playpause.PlayPauseView
+        android:id="@+id/row_play_pause_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:clickable="true"
+        app:fill_color="#e1e1e1"
+        app:pause_bg="#000000"
+        app:play_bg="#000000" />
+</LinearLayout>
