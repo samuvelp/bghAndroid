@@ -7,15 +7,17 @@ public class Sermon implements Serializable {
     public String author = "";
     public String title = "";
     public long createAt = 0;
+    public String length = "00:00";
 
     public Sermon() {
     }
 
-    public Sermon(String key, String author, String title, long createAt) {
+    public Sermon(String key, String author, String title, long createAt, String length) {
         this.key = key;
         this.author = author;
         this.title = title;
         this.createAt = createAt;
+        this.length = length;
     }
 
     public String getKey() {
@@ -48,6 +50,14 @@ public class Sermon implements Serializable {
 
     public void setCreateAt(long createAt) {
         this.createAt = createAt;
+    }
+
+    public String getLength() {
+        return length;
+    }
+
+    public void setLength(String length) {
+        this.length = length;
     }
 
     public class Payload {
