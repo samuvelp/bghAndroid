@@ -8,6 +8,7 @@ public class Sermon implements Serializable {
     public String title = "";
     public long createAt = 0;
     public String length = "00:00";
+    public Payload payload;
 
     public Sermon() {
     }
@@ -60,15 +61,12 @@ public class Sermon implements Serializable {
         this.length = length;
     }
 
-    public class Payload {
-        public String audioUrl = "";
-
-        public String getAudioUrl() {
-            return audioUrl;
-        }
-
-        public void setAudioUrl(String audioUrl) {
-            this.audioUrl = audioUrl;
-        }
+    public Payload getPayload() {
+        return payload;
     }
+
+    public void setPayload(Payload payload) {
+        this.payload = payload;
+    }
+
 }

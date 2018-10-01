@@ -1,11 +1,8 @@
 package com.gospel.bethany.bgh.fragments.tap;
 
 
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,8 +12,6 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -27,15 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 import com.gospel.bethany.bgh.Helper;
 import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.fragments.tap.adapter.TapAdapter;
-import com.gospel.bethany.bgh.model.AssemblyTaps;
 import com.gospel.bethany.bgh.model.Feed;
 import com.gospel.bethany.bgh.model.Tap;
 import com.gospel.bethany.bgh.model.TapWrapper;
 import com.gospel.bethany.bgh.model.User;
-import com.gospel.bethany.bgh.utils.NetworkUtil;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 
@@ -174,6 +166,7 @@ public class TapFragment extends Fragment {
     private ValueEventListener tapValueEventListener = new ValueEventListener() {
         @Override
         public void onDataChange(DataSnapshot dataSnapshot) {
+            tapRef.removeEventListener(this);
             if (!dataSnapshot.exists()) {
                 mProgressBar.setVisibility(View.INVISIBLE);
                 mNoFeedTextView.setVisibility(View.VISIBLE);
@@ -186,7 +179,7 @@ public class TapFragment extends Fragment {
         }
     };
 
-    ChildEventListener chilTapListener = new ChildEventListener() {
+    ChildEventListener childTapListener = new ChildEventListener() {
         @Override
         public void onChildAdded(DataSnapshot dataSnapshot, String s) {
             if (dataSnapshot != null && dataSnapshot.getValue() != null) {
@@ -222,7 +215,7 @@ public class TapFragment extends Fragment {
     };
 
     private void addListenerForNewTaps() {
-        FirebaseDatabase.getInstance().getReference().child("taps").orderByChild("createdAt").startAt(lastCreatedAt).addChildEventListener(chilTapListener);
+        FirebaseDatabase.getInstance().getReference().child("taps").orderByChild("createdAt").startAt(lastCreatedAt).addChildEventListener(childTapListener);
     }
 
 }
