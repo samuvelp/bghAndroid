@@ -3,9 +3,8 @@ package com.gospel.bethany.bgh;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
+import android.widget.Toast;
 
-import com.github.tibolte.agendacalendarview.models.CalendarEvent;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,6 +17,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.gospel.bethany.bgh.model.AssemblyTaps;
 import com.gospel.bethany.bgh.model.CalendarEvents;
+import com.gospel.bethany.bgh.model.Sermon;
 import com.gospel.bethany.bgh.model.Tap;
 import com.gospel.bethany.bgh.model.User;
 import com.gospel.bethany.bgh.model.UserTaps;
@@ -25,10 +25,8 @@ import com.gospel.bethany.bgh.model.UserTaps;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-
 
 import bolts.Task;
 import bolts.TaskCompletionSource;
@@ -40,8 +38,10 @@ import bolts.TaskCompletionSource;
 public class Helper {
 
     private static User user;
-    private static Query calendarEventReference;
-    static ValueEventListener calendarEventListener;
+    private static Query calendarEventQuery;
+    private static Query sermonEventQuery;
+    private static ValueEventListener calendarEventListener;
+    private static ValueEventListener sermonEventListener;
 
     public static void getUserandSave(final Context context) {
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference().child("users")
@@ -237,8 +237,8 @@ public class Helper {
     public static Task<ArrayList<CalendarEvents>> getCaledarEvents() {
         final TaskCompletionSource<ArrayList<CalendarEvents>> tcs = new TaskCompletionSource<>();
         final ArrayList<CalendarEvents> calendarEventsArrayList = new ArrayList<>();
-        calendarEventReference = FirebaseDatabase.getInstance().getReference().child("calendarEvents").orderByChild("timestamp").limitToLast(30);
-        calendarEventReference.keepSynced(true);
+        calendarEventQuery = FirebaseDatabase.getInstance().getReference().child("calendarEvents").orderByChild("timestamp").limitToLast(30);
+        calendarEventQuery.keepSynced(true);
         calendarEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -259,12 +259,45 @@ public class Helper {
 
             }
         };
-        calendarEventReference.addValueEventListener(calendarEventListener);
+        calendarEventQuery.addValueEventListener(calendarEventListener);
         return tcs.getTask();
     }
 
     public static void removeGetCalendarEventListener() {
-        calendarEventReference.removeEventListener(calendarEventListener);
+        calendarEventQuery.removeEventListener(calendarEventListener);
+    }
+
+    public static Task<ArrayList<Sermon>> getSermon() {
+        final TaskCompletionSource<ArrayList<Sermon>> tcs = new TaskCompletionSource<>();
+        final ArrayList<Sermon> sermonList = new ArrayList<>();
+        sermonEventQuery = FirebaseDatabase.getInstance().getReference().child("sermons");
+        sermonEventQuery.keepSynced(true);
+        sermonEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null && dataSnapshot.getChildren() != null) {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Sermon sermon = snapshot.getValue(Sermon.class);
+                        sermon.setKey(snapshot.getKey());
+                        sermonList.add(sermon);
+                    }
+                    tcs.setResult(sermonList);
+                } else {
+                    tcs.setResult(sermonList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setCancelled();
+            }
+        };
+        sermonEventQuery.addValueEventListener(sermonEventListener);
+        return tcs.getTask();
+    }
+
+    public static void removeSermonEventListner() {
+        sermonEventQuery.removeEventListener(sermonEventListener);
     }
 
     public static Task<Void> postCalenderEvent(CalendarEvents calendarEvent) {
@@ -281,5 +314,9 @@ public class Helper {
             }
         });
         return tcs.getTask();
+    }
+
+    public static void showToast(Context context, String message) {
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 }
