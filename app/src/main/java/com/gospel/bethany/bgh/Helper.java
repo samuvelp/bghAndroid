@@ -276,6 +276,7 @@ public class Helper {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 if (dataSnapshot != null && dataSnapshot.getChildren() != null) {
+                    removeSermonEventListner();
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Sermon sermon = snapshot.getValue(Sermon.class);
                         sermon.setKey(snapshot.getKey());
