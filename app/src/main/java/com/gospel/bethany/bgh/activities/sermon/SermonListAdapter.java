@@ -2,7 +2,6 @@ package com.gospel.bethany.bgh.activities.sermon;
 
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +13,8 @@ import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.model.Sermon;
 import com.ohoussein.playpause.PlayPauseView;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.MyViewHolder> {
     private ArrayList<Sermon> mSermonList = new ArrayList<>();
@@ -41,21 +40,14 @@ public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.My
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         holder.mSermonTitle.setText(mSermonList.get(position).getTitle());
         holder.mSermonAuthor.setText(mSermonList.get(position).getAuthor());
-        holder.mSermonLength.setText(getDuration(mSermonList.get(position).getPayload().getAudioUrl()));
+        holder.mSermonLength.setText(getDuration(mSermonList.get(position).getPayload().getDuration()));
     }
 
-    private String getDuration(String url) {
-        int duration =0;
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        try {
-            mediaPlayer.setDataSource(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        duration = mediaPlayer.getDuration();
-        long minutes = (duration / 1000) / 60;
-        long seconds = (duration / 1000) % 60;
-        return ""+minutes+":"+seconds;
+    private String getDuration(int length) {
+        String hms = String.format("%02d:%02d:%02d", TimeUnit.SECONDS.toHours(length),
+                TimeUnit.SECONDS.toMinutes(length) % TimeUnit.HOURS.toMinutes(1),
+                TimeUnit.SECONDS.toSeconds(length) % TimeUnit.MINUTES.toSeconds(1));
+        return hms;
     }
 
     @Override
