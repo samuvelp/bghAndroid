@@ -33,6 +33,61 @@
             android:layout_marginLeft="110dp"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/slidepanel_time_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true"
+                        android:text="00.00"
+                        android:textColor="@color/md_blue_grey_700"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:text="/"
+                        android:textColor="@color/md_blue_grey_700"
+                        android:textSize="14sp" />
+
+                    <TextView
+                        android:id="@+id/slidepanel_time_total"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true"
+                        android:text="00.00"
+                        android:textColor="@color/md_blue_grey_700"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <com.gospel.bethany.bgh.customViews.Slider
+                    android:id="@+id/audio_progress_control"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/md_black_1000"
+                    />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/sermon_title_tv"
@@ -41,7 +96,8 @@
                 android:fontFamily="sans-serif"
                 android:lines="1"
                 android:text="Sunday title unday title unday title unday title unday title unday title "
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:visibility="gone"/>
 
             <TextView
                 android:id="@+id/sermon_author_tv"
@@ -50,7 +106,8 @@
                 android:fontFamily="sans-serif"
                 android:lines="1"
                 android:text="Sunday title unday title unday title unday title unday title unday title "
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:visibility="gone"/>
 
         </LinearLayout>
     </LinearLayout>
