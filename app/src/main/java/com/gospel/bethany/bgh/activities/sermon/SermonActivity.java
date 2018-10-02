@@ -1,6 +1,5 @@
 package com.gospel.bethany.bgh.activities.sermon;
 
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -14,7 +13,6 @@ import com.gospel.bethany.bgh.R;
 import com.gospel.bethany.bgh.model.Sermon;
 import com.ohoussein.playpause.PlayPauseView;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 import bolts.Continuation;
@@ -89,20 +87,10 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
         obj.setMediaUrl(sermon.getPayload().getAudioUrl());
         obj.setMediaTitle(sermon.getTitle());
         obj.setMediaArtist(sermon.getAuthor());
-        obj.setMediaDuration(""+getDuration(sermon.getPayload().getAudioUrl()));
+        obj.setMediaDuration("" + sermon.getPayload().getDuration());
         return obj;
     }
 
-    private int getDuration(String url) {
-        long duration = 0;
-        MediaPlayer mediaPlayer = new MediaPlayer();
-        try {
-            mediaPlayer.setDataSource(url);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return mediaPlayer.getDuration();
-    }
 
     @Override
     public void onPlayButtonClicked(PlayPauseView playPauseView, int position) {
