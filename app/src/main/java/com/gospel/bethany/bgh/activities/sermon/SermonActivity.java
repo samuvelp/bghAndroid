@@ -1,17 +1,20 @@
 package com.gospel.bethany.bgh.activities.sermon;
 
+import android.media.MediaMetadata;
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gospel.bethany.bgh.Helper;
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.customViews.Slider;
+import com.gospel.bethany.bgh.customViews.SpinnerImageView;
 import com.gospel.bethany.bgh.model.Sermon;
-import com.ohoussein.playpause.PlayPauseView;
 
 import java.util.ArrayList;
 
@@ -23,14 +26,16 @@ import dm.audiostreamer.MediaMetaData;
 import dm.audiostreamer.StreamingManager;
 
 
-public class SermonActivity extends AppCompatActivity implements SermonListAdapter.OnPlayPauseButtonClickListener, CurrentSessionCallback {
+public class SermonActivity extends AppCompatActivity implements SermonListAdapter.OnPlayPauseButtonClickListener, CurrentSessionCallback, Slider.OnValueChangedListener {
     RecyclerView mMusicListRecyclerView;
-    PlayPauseView mPlayPauseButton;
-    TextView mSermonTitle, mSermonAuthor;
+    SpinnerImageView mPlayPauseButton;
+    TextView mSermonTitle, mSermonAuthor, mTimeProgressSlide, mTotalTimeSlide;
     SermonListAdapter mSermonListAdapter;
     ArrayList<Sermon> mSermonList;
     RecyclerView.LayoutManager mLayoutManager;
     StreamingManager mStreamingManager;
+    Slider mSlider;
+    private MediaMetaData currentSong;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +64,17 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
         mPlayPauseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPlayPauseButton.toggle();
+                if (!mPlayPauseButton.isSpinning())
+                    mPlayPauseButton.startAnimation();
+                else
+                    mPlayPauseButton.stopAnimation();
+            }
+        });
+        mSlider.setOnValueChangedListener(new Slider.OnValueChangedListener() {
+            @Override
+            public void onValueChanged(int value) {
+                mStreamingManager.onSeekTo(value);
+                ((AudioStreamingManager) mStreamingManager).scheduleSeekBarUpdate();
             }
         });
     }
@@ -69,6 +84,9 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
         mPlayPauseButton = findViewById(R.id.play_pause_view);
         mSermonTitle = findViewById(R.id.sermon_title_tv);
         mSermonAuthor = findViewById(R.id.sermon_author_tv);
+        mSlider = findViewById(R.id.audio_progress_control);
+        mTimeProgressSlide = findViewById(R.id.slidepanel_time_progress);
+        mTotalTimeSlide = findViewById(R.id.slidepanel_time_total);
         mSermonList = new ArrayList<>();
         setRecyclerViewAdapter();
         mStreamingManager = AudioStreamingManager.getInstance(SermonActivity.this);
@@ -81,9 +99,9 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
         mMusicListRecyclerView.setAdapter(mSermonListAdapter);
     }
 
-    private MediaMetaData getMediObj(Sermon sermon) {
+    private MediaMetaData getMediObj(Sermon sermon, int position) {
         MediaMetaData obj = new MediaMetaData();
-        obj.setMediaId("asdf");
+        obj.setMediaId("" + position);
         obj.setMediaUrl(sermon.getPayload().getAudioUrl());
         obj.setMediaTitle(sermon.getTitle());
         obj.setMediaArtist(sermon.getAuthor());
@@ -93,13 +111,47 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
 
 
     @Override
-    public void onPlayButtonClicked(PlayPauseView playPauseView, int position) {
-        if (playPauseView.isPlay()) {
-            mStreamingManager.onPlay(getMediObj(mSermonList.get(position)));
-            playPauseView.toggle();
-        } else {
-            mStreamingManager.onPause();
-            playPauseView.toggle();
+    public void onPlayButtonClicked(int position) {
+        ((AudioStreamingManager) mStreamingManager).setPlayMultiple(true);
+        mStreamingManager.onPlay(getMediObj(mSermonList.get(position), position));
+        showMediaInfo(getMediObj(mSermonList.get(position), position));
+//        mStreamingManager.onPause();
+    }
+    private void setMediaObjToBottomPlayer(MediaMetadata mediaMetadata){
+
+    }
+
+    private void setPGTime(int progress) {
+        try {
+            String timeString = "00.00";
+            int linePG = 0;
+            currentSong = ((AudioStreamingManager) mStreamingManager).getCurrentAudio();
+            if (currentSong != null && progress != Long.parseLong(currentSong.getMediaDuration())) {
+                timeString = DateUtils.formatElapsedTime(progress / 1000);
+                Long audioDuration = Long.parseLong(currentSong.getMediaDuration());
+                linePG = (int) (((progress / 1000) * 100) / audioDuration);
+            }
+            mTimeProgressSlide.setText(timeString);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void showMediaInfo(MediaMetaData media) {
+        currentSong = media;
+        mSlider.setValue(0);
+        mSlider.setMin(0);
+        mSlider.setMax(Integer.valueOf(media.getMediaDuration()) * 1000);
+        setPGTime(0);
+        setMaxTime();
+    }
+
+    private void setMaxTime() {
+        try {
+            String timeString = DateUtils.formatElapsedTime(Long.parseLong(currentSong.getMediaDuration()));
+            mTotalTimeSlide.setText(timeString);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
         }
     }
 
@@ -122,17 +174,27 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
 
     @Override
     public void playSongComplete() {
-
+        String timeString = "00.00";
+        mTotalTimeSlide.setText(timeString);
+        mTimeProgressSlide.setText(timeString);
+        mSlider.setValue(0);
     }
 
     @Override
     public void currentSeekBarPosition(int i) {
-
+        mSlider.setValue(i);
+        setPGTime(i);
     }
 
     @Override
     public void playCurrent(int i, MediaMetaData mediaMetaData) {
-
+        if (Integer.toString(i).equals(mediaMetaData.getMediaDuration())) {
+            String timeString = "00.00";
+            mTotalTimeSlide.setText(timeString);
+            mTimeProgressSlide.setText(timeString);
+            mSlider.setValue(0);
+        }
+        showMediaInfo(mediaMetaData);
     }
 
     @Override
@@ -157,5 +219,10 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
         super.onStop();
         if (mStreamingManager != null)
             ((AudioStreamingManager) mStreamingManager).unSubscribeCallBack();
+    }
+
+    @Override
+    public void onValueChanged(int value) {
+
     }
 }
