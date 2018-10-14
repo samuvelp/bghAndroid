@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/row_view_linear_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
@@ -9,8 +9,8 @@
     <LinearLayout
         android:id="@+id/title_layout"
         android:layout_width="0dp"
-        android:layout_weight="3"
         android:layout_height="wrap_content"
+        android:layout_weight="3"
         android:orientation="vertical">
 
         <TextView
@@ -36,17 +36,24 @@
     <TextView
         android:id="@+id/row_sermon_length"
         android:layout_width="0dp"
-        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/title_layout"
-        android:gravity="center"/>
+        android:layout_weight="1"
+        android:gravity="center" />
 
-    <com.ohoussein.playpause.PlayPauseView
-        android:id="@+id/row_play_pause_view"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:clickable="true"
-        app:fill_color="#e1e1e1"
-        app:pause_bg="#000000"
-        app:play_bg="#000000" />
+    <!--<com.ohoussein.playpause.PlayPauseView-->
+    <!--android:id="@+id/row_play_pause_view"-->
+    <!--android:layout_width="40dp"-->
+    <!--android:layout_height="40dp"-->
+    <!--android:clickable="true"-->
+    <!--app:fill_color="#e1e1e1"-->
+    <!--app:pause_bg="#000000"-->
+    <!--android:visibility="gone"-->
+    <!--app:play_bg="#000000" />-->
+    <!--<com.gospel.bethany.bgh.customViews.SpinnerImageView-->
+        <!--android:id="@+id/spinning_image_view"-->
+        <!--android:layout_width="40dp"-->
+        <!--android:layout_height="40dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:visibility="visible" />-->
 </LinearLayout>
