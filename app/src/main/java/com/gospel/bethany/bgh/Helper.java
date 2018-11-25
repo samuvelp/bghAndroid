@@ -21,6 +21,7 @@ import com.gospel.bethany.bgh.model.Sermon;
 import com.gospel.bethany.bgh.model.Tap;
 import com.gospel.bethany.bgh.model.User;
 import com.gospel.bethany.bgh.model.UserTaps;
+import com.gospel.bethany.bgh.utils.Songs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -281,6 +282,38 @@ public class Helper {
                         Sermon sermon = snapshot.getValue(Sermon.class);
                         sermon.setKey(snapshot.getKey());
                         sermonList.add(sermon);
+                    }
+                    tcs.setResult(sermonList);
+                } else {
+                    tcs.setResult(sermonList);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                tcs.setCancelled();
+            }
+        };
+        sermonEventQuery.addValueEventListener(sermonEventListener);
+        return tcs.getTask();
+    }
+
+    public static Task<ArrayList<Songs>> getSermons() {
+        final TaskCompletionSource<ArrayList<Songs>> tcs = new TaskCompletionSource<>();
+        final ArrayList<Songs> sermonList = new ArrayList<>();
+        sermonEventQuery = FirebaseDatabase.getInstance().getReference().child("sermons");
+        sermonEventQuery.keepSynced(true);
+        sermonEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                if (dataSnapshot != null && dataSnapshot.getChildren() != null) {
+                    removeSermonEventListner();
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                        Sermon sermon = snapshot.getValue(Sermon.class);
+//                        Songs song = new Songs(1543139905, sermon.title, sermon.author, sermon.payload.getAudioUrl(), 1543139905);
+                        Songs song = new Songs(sermon.createdAt, sermon.title, sermon.author, sermon.payload.getAudioUrl(), sermon.createdAt);
+                        sermon.setKey(snapshot.getKey());
+                        sermonList.add(song);
                     }
                     tcs.setResult(sermonList);
                 } else {
