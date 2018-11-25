@@ -1,4 +1,4 @@
-package com.gospel.bethany.bgh.activities.sermon;
+package com.gospel.bethany.bgh.activities.dump.sermon;
 
 
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gospel.bethany.bgh.R;
-import com.gospel.bethany.bgh.customViews.SpinnerImageView;
 import com.gospel.bethany.bgh.model.Sermon;
 
 import java.util.ArrayList;

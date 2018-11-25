@@ -1,4 +1,4 @@
-package com.gospel.bethany.bgh.activities.sermon;
+package com.gospel.bethany.bgh.activities.dump.sermon;
 
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
