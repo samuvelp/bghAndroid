@@ -9,6 +9,9 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
     <application
         android:name=".BGHApplication"
@@ -24,7 +27,6 @@
             android:screenOrientation="portrait"
             android:theme="@style/NoActionBarCustom"
             android:windowSoftInputMode="adjustPan">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -52,13 +54,14 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activities.sermon.SermonActivity"
+            android:name=".activities.dump.sermon.SermonActivity"
             android:screenOrientation="portrait" />
 
         <service
             android:name="dm.audiostreamer.AudioStreamingService"
             android:enabled="true"
             android:exported="true" />
+
         <receiver android:name="dm.audiostreamer.AudioStreamingReceiver">
             <intent-filter>
                 <action android:name="dm.audiostreamer.close" />
@@ -71,6 +74,8 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".activities.sermon.SermonPlayerActivity"
+            android:theme="@style/Theme.Design.NoActionBar"/>
     </application>
 
 </manifest>
