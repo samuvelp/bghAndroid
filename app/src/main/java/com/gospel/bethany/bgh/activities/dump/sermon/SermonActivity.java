@@ -1,6 +1,5 @@
 package com.gospel.bethany.bgh.activities.sermon;
 
-import android.media.MediaMetadata;
 import android.os.Bundle;
 import android.support.v4.media.session.PlaybackStateCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +53,7 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
                     mSermonList = task.getResult();
                     mSermonListAdapter.setSermonList(mSermonList);
                     mSermonListAdapter.notifyDataSetChanged();
+                    setMediaObjToBottomPlayer(mSermonList, 0);
                 }
                 return null;
             }
@@ -112,13 +112,19 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
 
     @Override
     public void onPlayButtonClicked(int position) {
-        ((AudioStreamingManager) mStreamingManager).setPlayMultiple(true);
-        mStreamingManager.onPlay(getMediObj(mSermonList.get(position), position));
-        showMediaInfo(getMediObj(mSermonList.get(position), position));
+        if (((AudioStreamingManager) mStreamingManager).isPlaying()) {
+            mStreamingManager.onPause();
+        } else {
+            mStreamingManager.onPlay(getMediObj(mSermonList.get(position), position));
+            showMediaInfo(getMediObj(mSermonList.get(position), position));
+        }
 //        mStreamingManager.onPause();
     }
-    private void setMediaObjToBottomPlayer(MediaMetadata mediaMetadata){
 
+    private void setMediaObjToBottomPlayer(ArrayList<Sermon> mSermonList, int position) {
+        mSermonTitle.setText(mSermonList.get(position).getTitle());
+        mSermonAuthor.setText(mSermonList.get(position).getAuthor());
+        showMediaInfo(getMediObj(mSermonList.get(position), position));
     }
 
     private void setPGTime(int progress) {

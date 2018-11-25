@@ -59,7 +59,6 @@ public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.My
     class MyViewHolder extends RecyclerView.ViewHolder {
         TextView mSermonTitle, mSermonAuthor, mSermonLength;
         LinearLayout mRowLayout;
-        SpinnerImageView mSpinnerImageView;
 
         MyViewHolder(View itemView) {
             super(itemView);
@@ -67,7 +66,6 @@ public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.My
             mSermonTitle = itemView.findViewById(R.id.row_sermon_title_tv);
             mSermonAuthor = itemView.findViewById(R.id.row_sermon_author_tv);
             mSermonLength = itemView.findViewById(R.id.row_sermon_length);
-            mSpinnerImageView = itemView.findViewById(R.id.spinning_image_view);
             mRowLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
