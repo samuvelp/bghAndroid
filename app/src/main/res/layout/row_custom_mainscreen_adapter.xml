@@ -39,7 +39,25 @@
                 android:layout_below="@+id/trackTitle"
                 android:layout_marginLeft="20dp"/>
 
-
+            <FrameLayout
+                android:id="@+id/download_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp">
+                <ImageView
+                    android:id="@+id/download_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_download_black" />
+                <ProgressBar
+                    android:id="@+id/download_progress_bar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:visibility="gone"/>
+            </FrameLayout>
 
         </RelativeLayout>
 

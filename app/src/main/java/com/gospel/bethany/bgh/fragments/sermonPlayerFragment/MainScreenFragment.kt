@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.RelativeLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.gospel.bethany.bgh.Helper
 import com.gospel.bethany.bgh.R
 import com.gospel.bethany.bgh.adapters.MainScreenAdapter
@@ -259,7 +258,7 @@ class MainScreenFragment : Fragment() {
             args.putString("songTitle", SongPlayingFragment.Statified.currentSongHelper?.songTitle)
             args.putInt("SongId", SongPlayingFragment.Statified.currentSongHelper?.songId?.toInt() as Int)
             args.putInt("songPosition", SongPlayingFragment.Statified.currentSongHelper?.currentPosition?.toInt() as Int)
-            args.putParcelableArrayList("songData", SongPlayingFragment.Statified._fetchSongs)
+            args.putParcelableArrayList("songUrl", SongPlayingFragment.Statified._fetchSongs)
             args.putString("MainScreenBottomBar", "success")
             songPlayingFragment.arguments = args
 

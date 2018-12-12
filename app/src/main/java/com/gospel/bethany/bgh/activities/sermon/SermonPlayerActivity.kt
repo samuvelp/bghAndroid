@@ -53,7 +53,7 @@ class SermonPlayerActivity : AppCompatActivity(){
         val preIntent = PendingIntent.getActivity(this@SermonPlayerActivity, System.currentTimeMillis().toInt() as Int, intent, 0)
 
         trackNotificationBuilder = Notification.Builder(this)
-                .setContentTitle("Echo is playing music")
+                .setContentTitle("BGH is playing Sermon")
                 .setSmallIcon(R.drawable.echo_logo)
                 .setContentIntent(preIntent)
                 .setOngoing(true)

@@ -112,7 +112,7 @@ class SongPlayingFragment : Fragment() {
                     Statified.currentSongHelper?.isPlaying = true
                     var nextSong = Statified._fetchSongs?.get(Statified._currentPosition)
 
-                    Statified.currentSongHelper?.songPath = nextSong?.songData
+                    Statified.currentSongHelper?.songPath = nextSong?.songUrl
                     Statified.currentSongHelper?.songTitle = nextSong?.songTitle
                     Statified.currentSongHelper?.songId = nextSong?.songId as Long
                     Statified.currentSongHelper?.currentPosition = Statified._currentPosition
@@ -192,7 +192,7 @@ class SongPlayingFragment : Fragment() {
 
             Statified.currentSongHelper?.isLoop = false
             var nextSong = Statified._fetchSongs?.get(Statified._currentPosition)
-            Statified.currentSongHelper?.songPath = nextSong?.songData
+            Statified.currentSongHelper?.songPath = nextSong?.songUrl
             Statified.currentSongHelper?.songTitle = nextSong?.songTitle
             Statified.currentSongHelper?.songArtist = nextSong?.artist
             Statified.currentSongHelper?.songId = nextSong?.songId as Long
@@ -232,7 +232,7 @@ class SongPlayingFragment : Fragment() {
 
             Statified.currentSongHelper?.isLoop = false
             var nextSong = Statified._fetchSongs?.get(Statified._currentPosition)
-            Statified.currentSongHelper?.songPath = nextSong?.songData
+            Statified.currentSongHelper?.songPath = nextSong?.songUrl
             Statified.currentSongHelper?.songTitle = nextSong?.songTitle
             Statified.currentSongHelper?.songArtist = nextSong?.artist
             Statified.currentSongHelper?.songId = nextSong?.songId as Long
@@ -357,7 +357,7 @@ class SongPlayingFragment : Fragment() {
             _songArttist = arguments!!.getString("songArtist")
             songId = arguments!!.getInt("SongId").toLong()
             Statified._currentPosition = arguments!!.getInt("songPosition")
-            Statified._fetchSongs = arguments!!.getParcelableArrayList("songData")
+            Statified._fetchSongs = arguments!!.getParcelableArrayList("songUrl")
 
             Statified.currentSongHelper?.songPath = path
             Statified.currentSongHelper?.songTitle = _songTitle
