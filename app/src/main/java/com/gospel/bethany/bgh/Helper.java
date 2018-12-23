@@ -21,7 +21,6 @@ import com.gospel.bethany.bgh.model.Sermon;
 import com.gospel.bethany.bgh.model.Tap;
 import com.gospel.bethany.bgh.model.User;
 import com.gospel.bethany.bgh.model.UserTaps;
-import com.gospel.bethany.bgh.utils.Songs;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -298,9 +297,9 @@ public class Helper {
         return tcs.getTask();
     }
 
-    public static Task<ArrayList<Songs>> getSermons() {
-        final TaskCompletionSource<ArrayList<Songs>> tcs = new TaskCompletionSource<>();
-        final ArrayList<Songs> sermonList = new ArrayList<>();
+    public static Task<ArrayList<Sermon>> getSermons() {
+        final TaskCompletionSource<ArrayList<Sermon>> tcs = new TaskCompletionSource<>();
+        final ArrayList<Sermon> sermonList = new ArrayList<>();
         sermonEventQuery = FirebaseDatabase.getInstance().getReference().child("sermons");
         sermonEventQuery.keepSynced(true);
         sermonEventListener = new ValueEventListener() {
@@ -311,9 +310,9 @@ public class Helper {
                     for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                         Sermon sermon = snapshot.getValue(Sermon.class);
 //                        Songs song = new Songs(1543139905, sermon.title, sermon.author, sermon.payload.getAudioUrl(), 1543139905);
-                        Songs song = new Songs(sermon.createdAt, sermon.title, sermon.author, sermon.payload.getAudioUrl(), sermon.createdAt);
+//                        Songs song = new Songs(sermon.createdAt, sermon.title, sermon.author, sermon.payload.getAudioUrl(), sermon.createdAt);
                         sermon.setKey(snapshot.getKey());
-                        sermonList.add(song);
+                        sermonList.add(sermon);
                     }
                     tcs.setResult(sermonList);
                 } else {
