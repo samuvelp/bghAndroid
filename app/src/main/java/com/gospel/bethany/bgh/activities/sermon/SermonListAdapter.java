@@ -1,4 +1,4 @@
-package com.gospel.bethany.bgh.activities.dump.sermon;
+package com.gospel.bethany.bgh.activities.sermon;
 
 
 import android.content.Context;
@@ -20,10 +20,10 @@ import java.util.concurrent.TimeUnit;
 public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.MyViewHolder> {
     private ArrayList<Sermon> mSermonList = new ArrayList<>();
     private Context mContext;
-    private OnPlayPauseButtonClickListener mListener;
+    private OnSermonClickListener mListener;
 
-    SermonListAdapter(OnPlayPauseButtonClickListener context) {
-        this.mListener = (OnPlayPauseButtonClickListener) context;
+    SermonListAdapter(OnSermonClickListener context) {
+        this.mListener = (OnSermonClickListener) context;
     }
 
     void setSermonList(ArrayList<Sermon> list) {
@@ -68,14 +68,14 @@ public class SermonListAdapter extends RecyclerView.Adapter<SermonListAdapter.My
             mRowLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    mListener.onPlayButtonClicked(getAdapterPosition());
+                    mListener.onSermonClicked(getAdapterPosition());
                 }
             });
         }
     }
 
 
-    interface OnPlayPauseButtonClickListener {
-        void onPlayButtonClicked(int position);
+    interface OnSermonClickListener {
+        void onSermonClicked(int position);
     }
 }
