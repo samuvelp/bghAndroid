@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.dump.sermon.SermonActivity">
+    tools:context=".activities.sermon.SermonActivity">
 
 
     <android.support.v7.widget.RecyclerView
@@ -23,6 +23,7 @@
         android:layout_below="@id/music_list_recycler_view"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="-100dp"
+        android:visibility="gone"
         android:background="#e2e2e2"
         android:orientation="vertical">
 
@@ -121,6 +122,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="5dp"
         android:clickable="true"
+        android:visibility="gone"
         android:foreground="?android:selectableItemBackground" />
 
 
