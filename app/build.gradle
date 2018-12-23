@@ -64,9 +64,12 @@ dependencies {
     //play pause library
     implementation 'com.github.ohoussein.playpauseview:playpauseview:1.0.2'
     //audio visualisation
-    implementation 'com.cleveroad:audiovisualization:1.0.0'
+//    implementation 'com.cleveroad:audiovisualization:1.0.0'
 
     implementation 'com.nineoldandroids:library:2.4.0'
+
+//    implementation 'com.4ert:audioview:0.4'
+
     implementation project(':dmaudiostreamer')
 
 
