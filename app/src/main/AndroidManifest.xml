@@ -54,7 +54,7 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".activities.dump.sermon.SermonActivity"
+            android:name=".activities.sermon.SermonActivity"
             android:screenOrientation="portrait" />
 
         <service
@@ -74,8 +74,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activities.sermon.SermonPlayerActivity"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+
     </application>
 
 </manifest>
