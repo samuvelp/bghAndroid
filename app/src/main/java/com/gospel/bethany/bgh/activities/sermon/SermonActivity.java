@@ -194,7 +194,6 @@ public class SermonActivity extends AppCompatActivity implements SermonListAdapt
                 break;
             case PlaybackStateCompat.STATE_BUFFERING:
                 Notification.sendNotification(this, "Sermon", "Downloading...");
-                Helper.showToast(this, "Buffering");
                 break;
         }
     }

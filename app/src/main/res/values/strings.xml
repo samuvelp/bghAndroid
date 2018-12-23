@@ -239,4 +239,10 @@
     <string name="action_settings">Settings</string>
     <string name="event_location">Where is the event?</string>
     <string name="note">Note:</string>
+    <string name="about">BGH is dedicated to all my beloved sisters
+        and brothers of Bethany Gospel Hall, Royapuram.
+        I thank God for helping me through out the development phase.
+        \n BGH houses three main feature \n 1. Tap - Testimony, Announcement and Prayer request
+        \n 2. Events - Calendar events \n 3. Sermons - list of sermon audio files
+    \nDeveloped by - Samuvel P</string>
 </resources>

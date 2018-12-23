@@ -4,22 +4,25 @@ package com.gospel.bethany.bgh.activities.main;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Rect;
+import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Toast;
 
 import com.gospel.bethany.bgh.R;
+import com.gospel.bethany.bgh.activities.about.AboutActivity;
 import com.gospel.bethany.bgh.activities.eventcalendar.EventCalendarActivity;
 import com.gospel.bethany.bgh.activities.sermon.SermonActivity;
 import com.gospel.bethany.bgh.activities.tap.TapActivity;
 import com.gospel.bethany.bgh.model.MainMenu;
+import com.gospel.bethany.bgh.utils.NetworkUtil;
 
 import java.util.ArrayList;
 
@@ -102,7 +105,12 @@ public class MainActivity extends AppCompatActivity implements MainMenuAdapter.O
         } else if (menuName.toLowerCase().equals("events")) {
             startActivity(new Intent(this, EventCalendarActivity.class));
         } else if (menuName.toLowerCase().equals("sermons")) {
-            startActivity(new Intent(this, SermonActivity.class));
+            if (NetworkUtil.isNetworkConnected(this))
+                startActivity(new Intent(this, SermonActivity.class));
+            else
+                Toast.makeText(this, "Internet connection is required to get the sermons from cloud", Toast.LENGTH_SHORT).show();
+        } else if (menuName.toLowerCase().equals("about")) {
+            startActivity(new Intent(this, AboutActivity.class));
         }
     }
 
