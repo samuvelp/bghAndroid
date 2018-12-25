@@ -23,3 +23,6 @@
 -keep class com.gospel.bethany.bgh.model.**{
     public <methods>;
 }
+-keep class se.emilsjolander.** { *; }
+-dontwarn se.emilsjolander.**
+-keep class com.bumptech.glide.GeneratedAppGlideModuleImpl
